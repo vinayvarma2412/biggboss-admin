@@ -1,0 +1,7 @@
+{
+  "name": "BiggBoss Telugu Admin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
