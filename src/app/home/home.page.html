@@ -1,20 +1,228 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      BiggBoss Admin
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card class="container">
+    <div class="title">Add/Edit Using Path</div>
+    <form (ngSubmit)="onPathSave()">
+      <div class="row">
+        <div class="col-25">
+          <label for="title">Path</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="givenPath" placeholder="Path">
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" (click)="fetchPath()" class="button">Fetch</ion-button>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="result">Result</label>
+        </div>
+        <div class="col-75">
+          <textarea type="text" id="pathResult" placeholder="Result" style="height:200px"></textarea>
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card class="container">
+    <div class="title">Add Highlight</div>
+    <form [formGroup]="highlight_form" (ngSubmit)="onHighlightsSave()">
+      <div class="row">
+        <div class="col-25">
+          <label for="title">Title</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="title" placeholder="Title">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="imgUrl">Image URL</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="imgUrl" placeholder="Image URL">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="img">Enable Image</label>
+        </div>
+        <div class="col-75">
+          <select formControlName="img">
+            <option value=false>No</option>
+            <option value=true>Yes</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="description">Description</label>
+        </div>
+        <div class="col-75">
+          <textarea type="text" id="description" formControlName="description" placeholder="Description" style="height:200px"></textarea>
+          <ion-button (click)="addTag('BR')">&lt;br&gt;</ion-button>
+          <ion-button (click)="addTag('A')">&lt;a&gt;</ion-button>
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
+
+  <ion-card class="container">
+    <div class="title">Upload Image</div>
+    <div class="row">
+      <div class="col-25">
+        <label for="uploadPath">Upload Path</label>
+      </div>
+      <div class="col-75">
+        <input type="text"[(ngModel)]="uploadPath" placeholder="Upload Path">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="uploadSize">Upload Size</label>
+      </div>
+      <div class="col-75">
+        <input type="number" [(ngModel)]="uploadSize" placeholder="Upload Size">
+      </div>
+    </div>
+    <div class="row submit">
+      <input id="chooseFile" type="file" style="padding-top:30px; padding-bottom:30px" (change)="onFileSelected($event)">
+      <ion-button color="dark" (click)="upload()">Upload</ion-button>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="downloadUrl">Download URL</label>
+      </div>
+      <div class="col-75">
+        <input id="downloadUrl" type="text" placeholder="Download URL">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="downloadUrl">Image Path</label>
+      </div>
+      <div class="col-75">
+        <input id="imgPath" type="text" placeholder="Image Path">
+      </div>
+    </div>
+  </ion-card>
+
+  <ion-card class="container">
+    <div class="title">Add Promo</div>
+    <form [formGroup]="promo_form" (ngSubmit)="onPromoSave()">
+      <div class="row">
+        <div class="col-25">
+          <label for="title">Title</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="title" placeholder="Title">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="url">Promo URL</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="url" placeholder="Promo URL">
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
+
+  <ion-card class="container">
+    <div class="title">Add Contestants</div>
+    <form [formGroup]="contestant_form" (ngSubmit)="onContestantSave()">
+      <div class="row">
+        <div class="col-25">
+          <label for="name">Name</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="name" placeholder="Name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="desc">Description</label>
+        </div>
+        <div class="col-75">
+          <textarea type="text" formControlName="desc" placeholder="Description" style="height:200px"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="url">URL</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="url" placeholder="URL">
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
+
+  <ion-card *ngIf="contestantsLoaded" class="container">
+    <div class="title">Polling</div>
+    <form [formGroup]="poll_form" (ngSubmit)="onPollSave()">
+      <div class="row">
+        <div class="col-25">
+          <label for="week">Week</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="week" placeholder="Week">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="url">Contestants</label>
+        </div>
+        <div class="col-75">
+          <ion-list>
+            <ion-item *ngFor="let contestant of contestants; let i = index">
+              <ion-label>{{ contestant.name }}</ion-label>
+              <ion-checkbox slot="end" [formControlName]="contestant.name"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
+
+  <ion-card *ngIf="pollingDataLoaded" class="container">
+    <div class="title">Polling Results</div>
+    <form [formGroup]="poll_result_form" (ngSubmit)="onPollResultSave()">
+      <ion-list>
+        <ion-item *ngFor="let pd of pollingData">
+          <ion-label position="fixed">{{ pd.name }}</ion-label>
+          <input style="width: 40%;" type="number" [formControlName]="pd.name">
+          <input style="width: 40%; margin-left: 5px;" type="number" [formControlName]="'manual_'+pd.name">
+        </ion-item>
+      </ion-list>
+      <div class="row submit">
+        <ion-button color="dark" class="button" type="submit">Save</ion-button>
+      </div>
+    </form>
+  </ion-card>
+
 </ion-content>
